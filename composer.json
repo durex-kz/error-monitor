@@ -1,0 +1,56 @@
+{
+    "name": "durex-kz/error-monitor",
+    "description": "Журнал ошибок Laravel: все ответы 4xx/5xx и сбои очередей/консоли, группировка повторов, место в коде, контекст Livewire, пометка запросов сканеров",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["laravel", "error-log", "exceptions", "monitoring"],
+    "authors": [
+        {
+            "name": "Aslan Tumenov",
+            "homepage": "https://github.com/durex-kz"
+        }
+    ],
+    "require": {
+        "php": "^8.3",
+        "illuminate/database": "^12.0|^13.0",
+        "illuminate/http": "^12.0|^13.0",
+        "illuminate/support": "^12.0|^13.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.0|^11.0",
+        "pestphp/pest": "^3.0|^4.0",
+        "pestphp/pest-plugin-laravel": "^3.0|^4.0"
+    },
+    "suggest": {
+        "durex-kz/bot-guard": "Распознавание сканеров уязвимостей и блокировка их подсетей",
+        "durex-kz/filament-security": "Журнал ошибок и виджет нерешённых ошибок в панели Filament"
+    },
+    "autoload": {
+        "psr-4": {
+            "DurexKz\\ErrorMonitor\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "DurexKz\\ErrorMonitor\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "DurexKz\\ErrorMonitor\\ErrorMonitorServiceProvider"
+            ]
+        }
+    },
+    "scripts": {
+        "test": "pest"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
