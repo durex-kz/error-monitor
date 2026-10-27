@@ -60,7 +60,7 @@ php artisan vendor:publish --tag=error-monitor-config
 | `ignore_codes` | `[419, 422]` | коды, которые не пишутся |
 | `ignore_hosts` | `['*.test']` | локальная разработка (Herd/Valet) |
 | `auto_resolve_codes` | `[410]` | коды, которые сразу пишутся исправленными |
-| `expected` | `.well-known/*` → 404 | ожидаемые ошибки с пояснением |
+| `expected` | `.well-known/*` → 404, 503 в режиме обслуживания | ожидаемые ошибки с пояснением |
 | `scanner_ip_window_minutes` | `60` | окно связывания серии запросов сканера по IP |
 | `admin_gate` | `security-admin` | gate доступа |
 | `model`, `user_model`, `table` | — | замена модели, пользователя, таблицы |
@@ -75,6 +75,10 @@ php artisan vendor:publish --tag=error-monitor-config
     \App\ErrorMonitor\MyRule::class, // implements DurexKz\ErrorMonitor\Contracts\ExpectedError
 ],
 ```
+
+Если в приложении свой список `expected`, встроенные правила нужно перечислить в нём: список целиком заменяет
+список пакета. Встроенные классы: `\DurexKz\ErrorMonitor\Expected\MaintenanceMode` — 503 во время
+`php artisan down`.
 
 ## Команды
 

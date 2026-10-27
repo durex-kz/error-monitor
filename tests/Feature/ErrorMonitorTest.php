@@ -55,6 +55,21 @@ it('writes 410 and expected errors as already resolved', function () {
 		->and(ErrorLog::where('url', 'like', '%/news')->sole()->isResolved())->toBeFalse();
 });
 
+it('writes 503 during maintenance mode as already resolved', function () {
+	app()->maintenanceMode()->activate([]);
+
+	ErrorLog::register(503, new Exception(), request404('/livewire/update'));
+
+	app()->maintenanceMode()->deactivate();
+
+	ErrorLog::register(503, new Exception(), request404('/tenders'));
+
+	expect(ErrorLog::where('url', 'like', '%livewire%')->sole())
+		->isResolved()->toBeTrue()
+		->resolution->toContain('режима обслуживания')
+		->and(ErrorLog::where('url', 'like', '%tenders%')->sole()->isResolved())->toBeFalse();
+});
+
 it('groups repeats and resolves them together', function () {
 	foreach ([1, 2, 3] as $id) {
 		ErrorLog::register(404, new NotFoundHttpException(), request404("/posts/{$id}"));
